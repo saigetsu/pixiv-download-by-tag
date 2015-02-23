@@ -64,7 +64,6 @@ def getImageFast(url, name=None, folder='./result'):
 # 		print (a+'downloaded'+str(i))
 def catchpiclink(a):
 	try:
-		if 
 		response = s.get('http://www.pixiv.net/member_illust.php?mode=medium&illust_id='+ a)
 		soup = bs4.BeautifulSoup(response.text)
 		urls = soup.select('img.original-image')[0].attrs.get('data-src')
