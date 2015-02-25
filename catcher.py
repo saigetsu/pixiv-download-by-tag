@@ -14,7 +14,7 @@ password=j["password"]
 ps=j["start_at"]
 pe=j["end_at"]
 is_vip=j["is_vip"]
-
+folder=j["folder"]
 
 
 s = requests.Session()
@@ -26,7 +26,7 @@ data = {
 		}
 r = s.post('https://www.secure.pixiv.net/login.php', data=data)
 if r.url == 'http://www.pixiv.net/mypage.php':
-	print('Login succet3ssfully')
+	print('Login successfully')
 else:
 	print('Login failed')
 
@@ -45,7 +45,7 @@ def createFilename(url, name, folder):
     ext = dotSplit[-1]
     file = '{}{}.{}'.format(folder, name, ext)
     return file
-def getImageFast(url, name=None, folder='./result'):
+def getImageFast(url, name=None, folder=folder):
     file = createFilename(url, name, folder)
     r = s.get(url,headers=headers)
     f = open(file, 'wb')
@@ -95,7 +95,7 @@ for keyword in keywords:
 				typ = 1
 			urls=""
 			if typ ==0:
-				if os.path.isfile('result'+a+'_p0.jpg')==False and os.path.isfile('result'+a+'.jpg')==False:				
+				if os.path.isfile(folder+a+'_p0.jpg')==False and os.path.isfile(folder+a+'.jpg')==False and os.path.isfile(folder+a+'_p0.png')==False and os.path.isfile(folder+a+'.png')==False:			
 					if catchpiclink(a):
 						lis.append(a)
 				else:
@@ -104,11 +104,12 @@ for keyword in keywords:
 				#urls=catchmangalink(a)懒的展开
 				pass
 #清理下载	
-print ("repairing wrong file")
-print (lis)
+if lis:
+	print ("repairing wrong file")
+	print (lis)
 while lis:
 	for a in lis:
-		if os.path.isfile('result'+a+'_p0.jpg')==False and os.path.isfile('result'+a+'.jpg')==False:				
+		if os.path.isfile(folder+a+'_p0.jpg')==False and os.path.isfile(folder+a+'.jpg')==False and os.path.isfile(folder+a+'_p0.png')==False and os.path.isfile(folder+a+'.png')==False:			
 			if catchpiclink(a)==0:
 				lis.remove(a)
 		else:
